@@ -6,6 +6,7 @@
 package ejercicios;
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -20,15 +21,26 @@ public class Ejercicio02 {
         double suma = 0;
         int numeroCalificaciones = 4;
         int i = 1;
-        while(i<=4){
-            System.out.println("Ingrese calificación: \n");
-            calificacion = entrada.nextDouble();
-            suma = suma + calificacion;
-            i = i + 1;
+        while (i <= 4) {
+            try {
+                System.out.println("Ingrese calificación: \n");
+                calificacion = entrada.nextDouble();
+                if (calificacion < 0 || calificacion > 10) {
+                    throw new Exception("Parametro fuera del rango permitido");
+                }
+                suma = suma + calificacion;
+                i = i + 1;
+
+            } catch (InputMismatchException e) {
+                System.out.printf("(InputMismatchException) Ocurrió una "
+                        + "excepción %s\n", e);
+                entrada.nextLine();
+            } catch (Exception e) {
+                System.out.printf("Ocurrió una excepción %s\n", e);
+            }
         }
-
+        
         promedio = suma / numeroCalificaciones;
-
         System.out.printf("%.2f\n", promedio);
     }
 }
